@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=100px, initial-scale=1">
+<script type="application/javascript" src="https://securegw-stage.paytm.in/merchantpgpui/checkoutjs/merchants/eOcBmV50600919603618" onload="onScriptLoad();" crossorigin="anonymous"></script>
+<style>
+.container {
+  background-color: #f2f2f2;
+  padding: 5px 20px 15px 20px;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+}
+.center {
+  margin: auto;
+  width: 50%;
+  border: 3px solid green;
+  padding: 10px;
+}
+.icon-container {
+  margin-bottom: 20px;
+  padding: 7px 0;
+  font-size: 24px;
+}
+
+.btn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  width: 100%;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 17px;
+}
+
+.btn:hover {
+  background-color: #45a049;
+}
+
+a {
+  color: #2196F3;
+}
+
+hr {
+  border: 1px solid lightgrey;
+}
+
+span.price {
+  float: right;
+  color: grey;
+}
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="center">
+      <h4>Cart <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i> <b>4</b></span></h4>
+      <p><a href="#">Product 1</a> <span class="price">RS15</span></p>
+      <p><a href="#">Product 2</a> <span class="price">RS5</span></p>
+      <p><a href="#">Product 3</a> <span class="price">RS8</span></p>
+      <p><a href="#">Product 4</a> <span class="price">RS2</span></p>
+      <p><a href="#">Total</a> <span class="price">RS30</span></p>
+      <hr>
+      <button value="Pay Now" class="btn" id="paytmWithPaytm">Pay Please</button>
+    </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+
+  document.getElementById("paytmWithPaytm").addEventListener("click", function(){
+      onScriptLoad("0ff15e86c09d4ef88fb67a12002ff51f1620482788424","1620482398670","100.00");
+  });
+  
+  function onScriptLoad(txnToken, orderId, amount) {
+      var config = {
+          "root": "",
+          "flow": "DEFAULT",
+          "merchant":{
+               "name":"XYZ Enterprises",
+               "logo":""
+           },
+           "style":{
+               "headerBackgroundColor":"#8dd8ff",
+               "headerColor":"#3f3f40"
+          },
+          "data": {
+              "orderId": orderId,
+              "token": txnToken,
+              "tokenType": "TXN_TOKEN",
+              "amount": amount
+          },
+          "handler":{
+               "notifyMerchant": function (eventName, data) {
+                  if(eventName == 'SESSION_EXPIRED'){
+                      alert("Your session has expired!!");
+                      location.reload();
+                  }
+               }
+          }
+      };
+
+      if (window.Paytm && window.Paytm.CheckoutJS) {
+          // initialze configuration using init method
+          window.Paytm.CheckoutJS.init(config).then(function onSuccess() {
+              console.log('Before JS Checkout invoke');
+              // after successfully update configuration invoke checkoutjs
+              window.Paytm.CheckoutJS.invoke();
+          }).catch(function onError(error) {
+              console.log("Error => ", error);
+          });
+      }
+  }
+</script>
+</body>
+</html>
